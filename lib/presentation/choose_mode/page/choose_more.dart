@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
@@ -45,22 +47,65 @@ class ChooseModePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
+                    Column(
+                      children: [
+                        ClipOval(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: AppColors.lightActionBg.withValues(
+                                  alpha: 0.5,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: SvgPicture.asset(AppVector.moon),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Dark Mode',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 40),
-                    Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
+
+                    SizedBox(width: 100),
+                    Column(
+                      children: [
+                        ClipOval(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: AppColors.lightActionBg.withValues(
+                                  alpha: 0.5,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: SvgPicture.asset(AppVector.sun),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Dark Mode',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -75,7 +120,7 @@ class ChooseModePage extends StatelessWidget {
                     //   ),
                     // );
                   },
-                  title: 'Get Started',
+                  title: 'Continue',
                 ),
               ],
             ),
