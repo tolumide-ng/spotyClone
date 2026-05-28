@@ -4,10 +4,9 @@ import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vector.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
-import 'package:spotify/presentation/choose_mode/page/choose_more.dart';
 
-class GetStartedPage extends StatelessWidget {
-  const GetStartedPage({super.key});
+class ChooseModePage extends StatelessWidget {
+  const ChooseModePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class GetStartedPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(AppImages.introBackground),
+                image: AssetImage(AppImages.chooseModeBackground),
                 fit: BoxFit.cover,
               ),
             ),
@@ -35,33 +34,46 @@ class GetStartedPage extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  'Enjoy listening to music',
+                  'Choose Mode',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 21),
-                Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.grey,
-                    fontSize: 13,
-                  ),
-                  textAlign: TextAlign.center,
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(width: 40),
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 50),
                 BasicAppButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const ChooseModePage(),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (BuildContext context) =>
+                    //         const ChooseModePage(),
+                    //   ),
+                    // );
                   },
                   title: 'Get Started',
                 ),
