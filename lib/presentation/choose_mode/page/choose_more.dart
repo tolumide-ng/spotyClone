@@ -7,6 +7,7 @@ import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vector.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
+import 'package:spotify/presentation/auth/pages/auth.dart';
 import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 
 class ChooseModePage extends StatelessWidget {
@@ -54,7 +55,7 @@ class ChooseModePage extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             context.read<ThemeCubit>().updateTheme(
-                              ThemeMode.light,
+                              ThemeMode.dark,
                             );
                           },
                           child: ClipOval(
@@ -92,7 +93,7 @@ class ChooseModePage extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             context.read<ThemeCubit>().updateTheme(
-                              ThemeMode.dark,
+                              ThemeMode.light,
                             );
                           },
                           child: ClipOval(
@@ -128,13 +129,12 @@ class ChooseModePage extends StatelessWidget {
                 const SizedBox(height: 50),
                 BasicAppButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (BuildContext context) =>
-                    //         const ChooseModePage(),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => const AuthPage(),
+                      ),
+                    );
                   },
                   title: 'Continue',
                 ),
