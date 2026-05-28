@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vector.dart';
+import 'package:spotify/core/configs/theme/app_colors.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
@@ -12,6 +14,7 @@ class GetStartedPage extends StatelessWidget {
       body: Stack(
         children: [
           Container(
+            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.introBackground),
@@ -33,7 +36,18 @@ class GetStartedPage extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                ElevatedButton(onPressed: () {}, child: Text('Get Started')),
+                SizedBox(height: 21),
+                Text(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.grey,
+                    fontSize: 13,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                BasicAppButton(onPressed: () {}, title: 'Get Started'),
               ],
             ),
           ),
