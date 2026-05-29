@@ -136,7 +136,7 @@ class ChooseModePage extends StatelessWidget {
                       ),
                     );
                   },
-                  title: 'Continue',
+                  title: 'Register',
                 ),
               ],
             ),
