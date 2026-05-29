@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "295991476735",
+    "project_id": "testingspoty",
+    "storage_bucket": "testingspoty.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295991476735:android:f159e18a06f7d271af67ca",
+        "android_client_info": {
+          "package_name": "com.example.spotify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgnQeBWJtDzqXOW1XlCH93fCYFoJif-0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
