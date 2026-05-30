@@ -32,7 +32,7 @@ class PlayList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Play list',
+                        'Playlist',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -72,7 +72,8 @@ class PlayList extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => SongPlayerPage(),
+                builder: (BuildContext context) =>
+                    SongPlayerPage(songEntity: songs[index]),
               ),
             );
           },
@@ -127,7 +128,8 @@ class PlayList extends StatelessWidget {
                   IconButton(
                     onPressed: () {},
                     icon: Icon(
-                      Icons.favorite_rounded,
+                      Icons.favorite_outline_outlined,
+                      size: 25,
                       color: AppColors.darkGrey,
                     ),
                   ),
