@@ -104,30 +104,3 @@ class NewsSongs extends StatelessWidget {
     );
   }
 }
-
-
-
-//  [
-//               Expanded(
-//                 child: Container(
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(30),
-//                     image: DecorationImage(
-//                       fit: BoxFit.cover,
-//                       image: NetworkImage(
-//                         '${AppURLs.fireStorage}${songs[index].artist} - ${songs[index].title}.jpeg?${AppURLs.mediaAlt}',
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(height: 10),
-//               Text(
-//                 songs[index].title,
-//                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-//               ),
-//               Text(
-//                 songs[index].artist,
-//                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-//               ),
-//             ],
