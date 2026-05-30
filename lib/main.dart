@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
 import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/splash/pages/splash.dart';
+import 'service_locator.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -17,6 +18,7 @@ Future<void> main() async {
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initializeDependencies();
   runApp(MainApp());
 }
 
@@ -27,7 +29,7 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [BlocProvider(create: (_) => ThemeCubit())],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (contex, mode) => MaterialApp(
+        builder: (context, mode) => MaterialApp(
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
