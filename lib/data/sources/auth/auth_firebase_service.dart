@@ -19,7 +19,15 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
 
       return Right({"message": "Signup was successful"});
     } on FirebaseAuthException catch (e) {
-      return Left(e);
+      String message = '';
+      if (e.code == 'weak-password') {
+        message = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        message = 'The account already exists for that email.';
+      } else {
+        message = 'An error occurred during signup.';
+      }
+      return Left(message);
     }
   }
 
