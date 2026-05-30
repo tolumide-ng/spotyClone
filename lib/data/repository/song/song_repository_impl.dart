@@ -1,0 +1,11 @@
+import 'package:dartz/dartz.dart';
+import 'package:spotify/data/sources/songs/song_firebase_service.dart';
+import 'package:spotify/domain/repository/auth/song/song.dart';
+import 'package:spotify/service_locator.dart';
+
+class SongRepositoryImpl extends SongRepository {
+  @override
+  Future<Either<dynamic, dynamic>> getNewsSongs() async {
+    return await sl<SongFirebaseService>().getNewsSongs();
+  }
+}
