@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/core/configs/constants/app_urls.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/entities/auth/song/song.dart';
+import 'package:spotify/presentation/song_player/pages/bloc/song_player_cubit.dart';
+import 'package:spotify/presentation/song_player/pages/bloc/song_player_state.dart';
 
 class SongPlayerPage extends StatelessWidget {
   final SongEntity songEntity;
@@ -19,14 +22,22 @@ class SongPlayerPage extends StatelessWidget {
           icon: Icon(Icons.more_vert_rounded),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        child: Column(
-          children: [
-            _songCover(context),
-            const SizedBox(height: 20),
-            _songDetail(),
-          ],
+      body: BlocProvider(
+        create: (_) => SongPlayerCubit()
+          ..loadSong(
+            '${AppURLs.songFireStorage}${songEntity.artist} - ${songEntity.title}.mp3?${AppURLs.mediaAlt}',
+          ),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: Column(
+            children: [
+              _songCover(context),
+              const SizedBox(height: 20),
+              _songDetail(),
+              const SizedBox(height: 20),
+              _songPlayer(context),
+            ],
+          ),
         ),
       ),
     );
@@ -40,7 +51,7 @@ class SongPlayerPage extends StatelessWidget {
         image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(
-            '${AppURLs.fireStorage}${songEntity.artist} - ${songEntity.title}.jpeg?${AppURLs.mediaAlt}',
+            '${AppURLs.coverFireStorage}${songEntity.artist} - ${songEntity.title}.jpeg?${AppURLs.mediaAlt}',
           ),
         ),
       ),
@@ -73,6 +84,38 @@ class SongPlayerPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _songPlayer(BuildContext context) {
+    return BlocBuilder<SongPlayerCubit, SongPlayerState>(
+      builder: (context, state) {
+        if (state is SongPlayerLoading) {
+          return CircularProgressIndicator();
+        }
+        if (state is SongPlayerLoaded) {
+          return Column(
+            children: [
+              Slider(
+                value: context
+                    .read<SongPlayerCubit>()
+                    .songPosition
+                    .inSeconds
+                    .toDouble(),
+                min: 0.0,
+                max: context
+                    .read<SongPlayerCubit>()
+                    .songDuration
+                    .inSeconds
+                    .toDouble(),
+                onChanged: (value) {},
+              ),
+            ],
+          );
+        }
+
+        return Container();
+      },
     );
   }
 }

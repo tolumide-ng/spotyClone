@@ -69,7 +69,7 @@ class NewsSongs extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                       image: DecorationImage(
                         image: NetworkImage(
-                          '${AppURLs.fireStorage}${songs[index].artist} - ${songs[index].title}.jpeg?${AppURLs.mediaAlt}',
+                          '${AppURLs.coverFireStorage}${songs[index].artist} - ${songs[index].title}.jpeg?${AppURLs.mediaAlt}',
                         ),
                         fit: BoxFit.cover,
                       ),
