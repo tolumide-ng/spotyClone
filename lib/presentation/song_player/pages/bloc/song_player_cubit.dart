@@ -15,7 +15,6 @@ class SongPlayerCubit extends Cubit<SongPlayerState> {
     });
 
     audioPlayer.durationStream.listen((duration) {
-      print("the received duration >>> $duration");
       songDuration = duration ?? Duration.zero;
     });
   }
@@ -25,12 +24,10 @@ class SongPlayerCubit extends Cubit<SongPlayerState> {
   }
 
   Future<void> loadSong(String url) async {
-    print("\n the url is >>> $url");
     try {
       await audioPlayer.setUrl(url);
       emit(SongPlayerLoaded());
     } catch (e) {
-      print("error loading song player >>>>>>>>>>> $e");
       emit(SongPlayerFailure());
     }
   }

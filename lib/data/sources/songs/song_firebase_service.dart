@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:spotify/data/models/song/song.dart';
 import 'package:spotify/domain/entities/auth/song/song.dart';
 
@@ -7,6 +8,9 @@ abstract class SongFirebaseService {
   Future<Either> getNewsSongs();
 
   Future<Either> getPlayList();
+
+  Future<Either> toggleFavoriteSongs(String songId);
+  Future<bool> isFavoriteSong(String songId);
 }
 
 class SongFirebaseServiceImpl extends SongFirebaseService {
@@ -50,6 +54,67 @@ class SongFirebaseServiceImpl extends SongFirebaseService {
       return Right(songs);
     } catch (e) {
       return Left('An error occured, Please try again later');
+    }
+  }
+
+  @override
+  Future<Either> toggleFavoriteSongs(String songId) async {
+    try {
+      final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+      late bool isFavorite;
+
+      User? user = firebaseAuth.currentUser;
+      String uid = user!.uid;
+
+      QuerySnapshot favoriteSongs = await firebaseFirestore
+          .collection('Users')
+          .doc(uid)
+          .collection('Favorites')
+          .where('songId', isEqualTo: songId)
+          .get();
+      if (favoriteSongs.docs.isEmpty) {
+        isFavorite = true;
+        await firebaseFirestore
+            .collection('Users')
+            .doc(uid)
+            .collection('Favorites')
+            .add({'songId': songId, 'addedDate': Timestamp.now()});
+      } else {
+        await favoriteSongs.docs.first.reference.delete();
+        isFavorite = false;
+      }
+
+      return Right(isFavorite);
+    } catch (e) {
+      return const Left("An error occured, Please try again later");
+    }
+  }
+
+  @override
+  Future<bool> isFavoriteSong(String songId) async {
+    try {
+      final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+      User? user = firebaseAuth.currentUser;
+      String uid = user!.uid;
+
+      QuerySnapshot favoriteSongs = await firebaseFirestore
+          .collection('Users')
+          .doc(uid)
+          .collection('Favorites')
+          .where('songId', isEqualTo: songId)
+          .get();
+
+      if (favoriteSongs.docs.isEmpty) {
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

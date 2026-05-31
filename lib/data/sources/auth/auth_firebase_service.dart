@@ -23,14 +23,12 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
       // await Future.delayed(const Duration(milliseconds: 500));
 
       try {
-        await FirebaseFirestore.instance.collection('Users').add({
-          'name': createUserReq.fullName,
-          'email': data.user?.email,
-        });
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(data.user?.uid)
+            .set({'name': createUserReq.fullName, 'email': data.user?.email});
       } catch (firestoreError) {
-        // If Firestore fails, the auth user is already created
-        // User signup is still successful even if Firestore write fails
-        print('Firestore error (non-fatal): $firestoreError');
+        return Left(firestoreError);
       }
 
       return Right({"message": "Signup was successful"});
