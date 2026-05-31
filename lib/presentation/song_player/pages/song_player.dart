@@ -25,7 +25,7 @@ class SongPlayerPage extends StatelessWidget {
       body: BlocProvider(
         create: (_) => SongPlayerCubit()
           ..loadSong(
-            '${AppURLs.songFireStorage}${songEntity.artist} - ${songEntity.title}.mp3?${AppURLs.mediaAlt}',
+            '${AppURLs.songFireStorage}${songEntity.title}.mp3?${AppURLs.mediaAlt}',
           ),
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -34,7 +34,7 @@ class SongPlayerPage extends StatelessWidget {
               _songCover(context),
               const SizedBox(height: 20),
               _songDetail(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               _songPlayer(context),
             ],
           ),
@@ -97,6 +97,8 @@ class SongPlayerPage extends StatelessWidget {
           return Column(
             children: [
               Slider(
+                activeColor: Color(0xffffffff),
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                 value: context
                     .read<SongPlayerCubit>()
                     .songPosition
@@ -110,6 +112,41 @@ class SongPlayerPage extends StatelessWidget {
                     .toDouble(),
                 onChanged: (value) {},
               ),
+              // const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    formatDuration(
+                      context.read<SongPlayerCubit>().songPosition,
+                    ),
+                  ),
+
+                  Text(
+                    formatDuration(
+                      context.read<SongPlayerCubit>().songDuration,
+                    ),
+                  ),
+                ],
+              ),
+              GestureDetector(
+                onTap: () {
+                  context.read<SongPlayerCubit>().playOrPauseSong();
+                },
+                child: Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary,
+                  ),
+                  child: Icon(
+                    context.read<SongPlayerCubit>().audioPlayer.playing
+                        ? Icons.pause_rounded
+                        : Icons.play_arrow_rounded,
+                  ),
+                ),
+              ),
             ],
           );
         }
@@ -117,5 +154,12 @@ class SongPlayerPage extends StatelessWidget {
         return Container();
       },
     );
+  }
+
+  String formatDuration(Duration duration) {
+    final minutes = duration.inMinutes.remainder(60);
+    final seconds = duration.inSeconds.remainder(60);
+
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '')}';
   }
 }
