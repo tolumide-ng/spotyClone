@@ -5,8 +5,10 @@ import 'package:spotify/data/sources/auth/auth_firebase_service.dart';
 import 'package:spotify/data/sources/songs/song_firebase_service.dart';
 import 'package:spotify/domain/repository/auth/auth.dart';
 import 'package:spotify/domain/repository/auth/song/song.dart';
+import 'package:spotify/domain/usecases/auth/get_user.dart';
 import 'package:spotify/domain/usecases/auth/login.dart';
 import 'package:spotify/domain/usecases/auth/signup.dart';
+import 'package:spotify/domain/usecases/song/get_favorite_songs.dart';
 import 'package:spotify/domain/usecases/song/get_news_song.dart';
 import 'package:spotify/domain/usecases/song/get_playlist.dart';
 import 'package:spotify/domain/usecases/song/is_favorite_song.dart';
@@ -29,4 +31,6 @@ Future<void> initializeDependencies() async {
     ToggleFavoriteSongsUseCase(),
   );
   sl.registerSingleton<IsFavoriteSongUseCase>(IsFavoriteSongUseCase());
+  sl.registerSingleton<GetUserUseCase>(GetUserUseCase());
+  sl.registerSingleton<GetFavoriteSongsUseCase>(GetFavoriteSongsUseCase());
 }

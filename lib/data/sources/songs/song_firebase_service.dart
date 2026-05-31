@@ -13,6 +13,7 @@ abstract class SongFirebaseService {
 
   Future<Either> toggleFavoriteSongs(String songId);
   Future<bool> isFavoriteSong(String songId);
+  Future<Either> getUserFavoriteSongs();
 }
 
 class SongFirebaseServiceImpl extends SongFirebaseService {
@@ -129,6 +130,40 @@ class SongFirebaseServiceImpl extends SongFirebaseService {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  @override
+  Future<Either<dynamic, dynamic>> getUserFavoriteSongs() async {
+    try {
+      final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+      User? user = firebaseAuth.currentUser;
+      String uid = user!.uid;
+      List<SongEntity> favoriteSongs = [];
+
+      QuerySnapshot favoritesSnapshot = await firebaseFirestore
+          .collection('Users')
+          .doc(uid)
+          .collection('Favorites')
+          .get();
+
+      for (var element in favoritesSnapshot.docs) {
+        String songId = element['songId'];
+        var song = await firebaseFirestore
+            .collection('songs')
+            .doc(songId)
+            .get();
+
+        SongModel songModel = SongModel.fromJson(song.data()!);
+        songModel.isFavorite = true;
+        favoriteSongs.add(songModel.toEntity());
+      }
+
+      return Right(favoriteSongs);
+    } catch (e) {
+      return Left('An error occured');
     }
   }
 }
