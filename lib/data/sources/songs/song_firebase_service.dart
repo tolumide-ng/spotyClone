@@ -3,6 +3,8 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:spotify/data/models/song/song.dart';
 import 'package:spotify/domain/entities/auth/song/song.dart';
+import 'package:spotify/domain/usecases/song/is_favorite_song.dart';
+import 'package:spotify/service_locator.dart';
 
 abstract class SongFirebaseService {
   Future<Either> getNewsSongs();
@@ -27,6 +29,11 @@ class SongFirebaseServiceImpl extends SongFirebaseService {
 
       for (var element in data.docs) {
         var songModel = SongModel.fromJson(element.data());
+        bool isFavorite = await sl<IsFavoriteSongUseCase>().call(
+          element.reference.id,
+        );
+        songModel.isFavorite = isFavorite;
+        songModel.songId = element.reference.id;
         songs.add(songModel.toEntity());
       }
 
@@ -48,6 +55,13 @@ class SongFirebaseServiceImpl extends SongFirebaseService {
 
       for (var element in data.docs) {
         var songModel = SongModel.fromJson(element.data());
+
+        bool isFavorite = await sl<IsFavoriteSongUseCase>().call(
+          element.reference.id,
+        );
+        songModel.isFavorite = isFavorite;
+        songModel.songId = element.reference.id;
+
         songs.add(songModel.toEntity());
       }
 
