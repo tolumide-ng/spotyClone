@@ -15,9 +15,15 @@ class FavoriteSongsCubit extends Cubit<FavoriteSongsState> {
       (l) {
         emit(FavoriteSongsFailure());
       },
-      (favoriteSongs) => {
-        emit(FavoriteSongsLoaded(favoriteSongs: favoriteSongs)),
+      (r) {
+        favoriteSongs = r;
+        emit(FavoriteSongsLoaded(favoriteSongs: favoriteSongs));
       },
     );
+  }
+
+  void removeSong(int index) {
+    favoriteSongs.removeAt(index);
+    emit(FavoriteSongsLoaded(favoriteSongs: favoriteSongs));
   }
 }

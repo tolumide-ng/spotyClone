@@ -158,6 +158,7 @@ class SongFirebaseServiceImpl extends SongFirebaseService {
 
         SongModel songModel = SongModel.fromJson(song.data()!);
         songModel.isFavorite = true;
+        songModel.songId = songId;
         favoriteSongs.add(songModel.toEntity());
       }
 
